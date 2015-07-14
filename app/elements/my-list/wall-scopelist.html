@@ -274,7 +274,7 @@
         var newBugs =[];
         for (var i = 0; i < foundScope.bugs.length; i++) {
           var bug = foundScope.bugs[i];
-          var color = 'color:'+bug.color
+          var color = 'color:'+bug.color;
           if( bug.id === foundBugId) {
             newBugs.push({ name: bug.name, population: newPopulation, color: color});
           } else {
