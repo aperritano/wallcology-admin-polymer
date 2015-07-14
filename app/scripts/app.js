@@ -34,15 +34,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   nutella.net.subscribe('wallcology_admin_channel', function(message, channel) {
     //console.log(message +  ' on ' + channel);
   });
-
-  nutella.net.publish('wallcology_admin_channel', 'I WORK');
+  //
+  //nutella.net.publish('wallcology_admin_channel', 'I WORK');
 
 
   app.toggleWallscopes = function(event) {
     if( event.target.checked ) {
-
+      var mylist = document.querySelector('#lister');
       nutella.net.publish('wallcology_admin_channel', {
-        event: 'start'
+        event: 'start',
+        scopeConfiguration: mylist.scopes
       });
 
     } else {
@@ -66,15 +67,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   app.createScope = function(scopeName) {
     //console.log('we have it'+ scopeName);
     var mylist = document.querySelector('#lister');
-
-
     mylist.addScope(scopeObj(scopeName));
-    //console.log('MYLIST: ' + mylist.scopes);
-    //mylist.fire('updateItemsList',scopeName);
-    //console.log('WEEEEE SAID HELLO' + scopeName);
-    //app.scopes.push(scopeName);
-    //console.log(app.scopes);
   };
+
+  app.sendScopeUpdate = function(scope) {
+    nutella.net.publish('wallcology_admin_channel', {
+      event: 'update_scope',
+      scopeId: scope.id,
+      scopeConfiguration: scope
+    });
+  }
 
   function scopeObj(scopeName) {
 

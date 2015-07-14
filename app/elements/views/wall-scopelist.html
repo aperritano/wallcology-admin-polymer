@@ -68,6 +68,13 @@
       width: 100%;
     }
 
+
+    paper-button[raised].colorful {
+      background: #D84315;
+      color: #fff;
+    }
+
+
   </style>
   <template>
     <template is="dom-repeat" id="scopeList" items="{{scopes}}" as="scope" index-as="scopeIndex">
@@ -123,6 +130,10 @@
               </div>
               </div>
 
+          </div>
+          <div class="horizontal center-justified layout">
+            <div><paper-button tabindex="0" raised class="colorful custom" on-tap="updateRemoteScopeAction">Update</paper-button>
+            </div>
           </div>
         </paper-material>
       </section>
@@ -196,6 +207,12 @@
         var t = document.querySelector('#wall-toast');
         t.text = 'The bug ' + bugModel.bug.name + ' has been deleted.';
         t.show();
+      },
+      updateRemoteScopeAction: function(event) {
+        var scopeModel = this.$.scopeList.modelForElement(event.target);
+
+        var app = document.querySelector('#app');
+        app.sendScopeUpdate(scopeModel.scope);
       },
       scopesAddedOrRemoved: function (changeRecord) {
         console.log('SCOPES changes added or removed SCOPES:');
