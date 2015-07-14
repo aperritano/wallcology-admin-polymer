@@ -53,7 +53,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <!-- will be replaced with elements/elements.vulcanized.html -->
   <link rel="import" href="elements/elements.html">
   <!-- endreplace-->
-</head>
+
+  <style is="custom-style">
+    .line {
+      margin-right: 40px;
+    }
+
+
+
+    /*.line span {*/
+      /*margin-left: 24px;*/
+    /*}*/
+
+    </style>
+    </head>
 
 <body unresolved class="fullbleed layout vertical">
   <span id="browser-sync-binding"></span>
@@ -73,6 +86,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="middle title">WALLCOLOGY ADMIN<div>{{className}}</div></div>
 
 
+        <div class="line"><paper-toggle-button id="toggle-wallscope" on-change="toggleWallscopes"></paper-toggle-button><span></span></div>
         <wall-addscope></wall-addscope>
       </paper-toolbar>
 
@@ -105,7 +119,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     app.className = 'BZEADS-BETH';
 
 
-//    var ironAjax = document.querySelector('iron-ajax');
+
+//    var toggle = document.querySelector("#paper-toggle-button");
+//    toggle.addEventListener('change', function () {
+//      if (this.checked) {
+//        // do something if when checked
+//      } else {
+//        // do something if not checked
+//      }
+//    });
+
+
+
+    //    var ironAjax = document.querySelector('iron-ajax');
 //    ironAjax.addEventListener('response', function() {
 //      console.log(ironAjax.lastResponse[0].id);
 //    });
@@ -118,7 +144,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 
   <!-- build:js scripts/app.js -->
+  <script src="scripts/nutella_lib.js"></script>
   <script src="scripts/app.js"></script>
+
+
   <!-- endbuild-->
 </body>
 

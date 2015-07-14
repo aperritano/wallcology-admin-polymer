@@ -15,6 +15,43 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
   var app = document.querySelector('#app');
 
+  var nutella = NUTELLA.init('127.0.0.1', 'wallcology', 'default', 'wallcology_admin',
+    function(success) {
+      if (success) {
+        console.log('Successfully connected nutella!');
+      } else {
+        console.log('Error connecting!');
+      }
+  });
+
+
+  nutella.setResourceId('r_id');
+
+  nutella.location.ready( function() {
+    //console.log(nutella.location.resources);
+  });
+
+  nutella.net.subscribe('wallcology_admin_channel', function(message, channel) {
+    //console.log(message +  ' on ' + channel);
+  });
+
+  nutella.net.publish('wallcology_admin_channel', 'I WORK');
+
+
+  app.toggleWallscopes = function(event) {
+    if( event.target.checked ) {
+
+      nutella.net.publish('wallcology_admin_channel', {
+        event: 'start'
+      });
+
+    } else {
+      nutella.net.publish('wallcology_admin_channel', {
+        event: 'stop'
+      });
+    }
+  };
+
   app.addScope = function(scope) {
     var mylist = document.querySelector('#lister');
     mylist.addScope(scope);
