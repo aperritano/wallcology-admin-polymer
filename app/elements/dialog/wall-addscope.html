@@ -8,7 +8,7 @@ Code distributed by Google as part of the polymer project is also
 subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
 -->
 
-<dom-module id="wall-dialog">
+<dom-module id="wall-addscope">
   <style is="custom-style">
 
     :root {
@@ -65,9 +65,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   </style>
   <template>
-    <!--<section>-->
-    <paper-icon-button id="wallAdd" data-dialog="dialog" icon="add">hi</paper-icon-button>
-    <!--<paper-button on-tap="{{toggleDialog}}">HI</paper-button>-->
+    <paper-icon-button id="wallAdd" data-dialog="dialog" icon="add"></paper-icon-button>
     <paper-dialog id="dialog" entry-animation="scale-up-animation" exit-animation="fade-out-animation">
       <h2>Create a New Wallscope</h2>
 
@@ -78,15 +76,20 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <paper-button id="addButton" dialog-confirm autofocus>ADD</paper-button>
       </div>
     </paper-dialog>
-    <!--</section>-->
-
     <paper-toast id="toast1" class="capsule" text=""></paper-toast>
   </template>
+</dom-module>
 <script>
   (function() {
     Polymer({
-      is: 'wall-dialog',
-
+      is: 'wall-addscope',
+      properties: {
+        scopeName: {
+          type: String,
+          value: 'WALLSCOPE-',
+          notify: true
+        }
+      },
       factoryImpl: function() {
         console.log('CONSTRUCTOR');
       },
@@ -97,16 +100,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       },
 
       addButtonTap: function() {
-        console.log('Add' + this.$.scopeName.value);
-
         var app = document.querySelector('#app');
+
         app.createScope(this.$.scopeName.value);
 
         var t = document.querySelector('#toast1');
         t.text = 'Wallscope named: ' + this.scopeName + ' has been added.';
         t.show();
-
-
       },
 
       wallAddTap: function(e) {
@@ -124,11 +124,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         var id = button.getAttribute('data-dialog');
         var dialog = document.getElementById(id);
         if (dialog) {
+          this.computeScopeName();
           dialog.open();
         }
       },
 
+      computeScopeName: function() {
+        var app = document.querySelector('#app');
+        this.scopeName = this.scopeName + app.scopes.length;
+      },
+      ready: function() {
+      },
       created: function() {
+
 //        console.log(this.localName + '#' + this.id + ' was created');
       },
 
@@ -143,16 +151,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       attributeChanged: function(name, type) {
         console.log(this.localName + '#' + this.id + ' attribute ' + name +
           ' was changed to ' + this.getAttribute(name) + type);
-      },
-
-      properties: {
-        scopeName: {
-          type: String,
-          value: 'wallscope-',
-          notify: true
-        }
       }
     });
   })();
 </script>
-</dom-module>
+

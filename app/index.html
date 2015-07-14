@@ -73,12 +73,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <div class="middle title">WALLCOLOGY ADMIN<div>{{className}}</div></div>
 
 
-        <wall-dialog id="mylist"></wall-dialog>
+        <wall-addscope></wall-addscope>
       </paper-toolbar>
 
       <!-- Main Content -->
       <div class="content">
-          <my-list id="lister"></my-list>
+          <wall-scopelist id="lister"></wall-scopelist>
       </div>
     </paper-header-panel>
 
@@ -112,7 +112,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
 //    console.log('states ' + this.$.);
 //    console.log('states ' + app.statesLoaded);
-    app.items = [
+    app.scopes = [
     ];
   </script>
 

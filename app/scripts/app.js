@@ -20,18 +20,40 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     mylist.addScope(scope);
   };
 
-  app.createScope = function(scopeName) {
-    //console.log('we have it'+ scopeName);
-
+  app.addBugToScope = function(bug, scopeIndex)  {
     var mylist = document.querySelector('#lister');
-    mylist.addScope(scopeName);
-    //console.log('MYLIST: ' + mylist.items);
-    //mylist.fire('updateItemsList',scopeName);
-    //console.log('WEEEEE SAID HELLO' + scopeName);
-    //app.items.push(scopeName);
-    //console.log(app.items);
+
+    mylist.addBugToScope(bug, scopeIndex);
   };
 
+  app.createScope = function(scopeName) {
+    //console.log('we have it'+ scopeName);
+    var mylist = document.querySelector('#lister');
+
+
+    mylist.addScope(scopeObj(scopeName));
+    //console.log('MYLIST: ' + mylist.scopes);
+    //mylist.fire('updateItemsList',scopeName);
+    //console.log('WEEEEE SAID HELLO' + scopeName);
+    //app.scopes.push(scopeName);
+    //console.log(app.scopes);
+  };
+
+  function scopeObj(scopeName) {
+
+    var mylist = document.querySelector('#lister');
+    var newId = mylist.scopes.length + 1;
+
+
+    return {
+      id: newId,
+      name: scopeName,
+      lastupdated: new Date().getTime(),
+      bugs: [
+
+      ],
+    };
+  }
 
   //app.statesLoaded = function(e) {
   //  console.log('STATESLOAD' + e);
