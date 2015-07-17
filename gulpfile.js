@@ -12,6 +12,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 // Include Gulp & Tools We'll Use
 var gulp = require('gulp');
 var $ = require('gulp-load-plugins')();
+var gulpIgnore = require('gulp-ignore');
 var del = require('del');
 var runSequence = require('run-sequence');
 var browserSync = require('browser-sync');
@@ -61,6 +62,7 @@ gulp.task('jshint', function () {
       'app/elements/**/*.js',
       'app/elements/**/*.html'
     ])
+    .pipe(gulpIgnore.exclude(/nutella_lib\.js/))
     .pipe(reload({stream: true, once: true}))
     .pipe($.jshint.extract()) // Extract JS from .html files
     .pipe($.jshint())
@@ -109,6 +111,48 @@ gulp.task('copy', function () {
   return merge(app, bower, elements, vulcanized, swBootstrap, swToolbox)
     .pipe($.size({title: 'copy'}));
 });
+
+var NUTELLA_DIR = '/Users/aperritano/Box Sync/dev/research/nutella/wallcology/interfaces/wallscope-admin-interface';
+
+// Copy All Files At The Root Level (app)
+gulp.task('copy-nutella', function () {
+  var app = gulp.src([
+    'dist/**'
+  ], {
+    dot: true
+  }).pipe(gulp.dest(NUTELLA_DIR));
+
+  var bower = gulp.src([
+    'bower_components/**/*'
+  ]).pipe(gulp.dest(NUTELLA_DIR+'/bower_components'));
+
+  var elements = gulp.src(['dist/elements/**'])
+    .pipe(gulp.dest(NUTELLA_DIR+'/elements'));
+
+  var swBootstrap = gulp.src(['bower_components/platinum-sw/bootstrap/**'])
+    .pipe(gulp.dest(NUTELLA_DIR+'/elements/bootstrap'));
+
+  var swToolbox = gulp.src(['bower_components/sw-toolbox/**'])
+    .pipe(gulp.dest(NUTELLA_DIR+'/sw-toolbox'));
+
+  var vulcanized = gulp.src(['dist/elements/elements.html'])
+    .pipe($.rename('elements.vulcanized.html'))
+    .pipe(gulp.dest(NUTELLA_DIR+'/elements'));
+
+  return merge(app, bower, elements, vulcanized, swBootstrap, swToolbox)
+    .pipe($.size({title: 'copy-nutella'}));
+});
+
+//// Copy All Files At The Root Level (app)
+//gulp.task('copy-nutella', function () {
+//  var app = gulp.src([
+//    'dist/**'], {
+//    dot: true
+//  }).pipe(gulp.dest('/Users/aperritano/Box Sync/dev/research/nutella/wallcology/interfaces/wallscope-admin-interface'));
+//
+//  return merge(app)
+//    .pipe($.size({title: 'copy-nutella'}));
+//});
 
 // Copy Web Fonts To Dist
 gulp.task('fonts', function () {

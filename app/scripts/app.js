@@ -15,6 +15,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   // Learn more about auto-binding templates at http://goo.gl/Dx1u2g
   var app = document.querySelector('#app');
 
+  /* jshint undef: true, unused: true */
+  /* global NUTELLA */
   var nutella = NUTELLA.init('127.0.0.1', 'wallcology', 'default', 'wallcology_admin',
     function(success) {
       if (success) {
@@ -32,10 +34,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   });
 
   nutella.net.subscribe('wallcology_admin_channel', function(message, channel) {
-    //console.log(message +  ' on ' + channel);
+    console.log('message ' + message +  ' on channel' + channel);
   });
-  //
-  //nutella.net.publish('wallcology_admin_channel', 'I WORK');
 
 
   app.toggleWallscopes = function(event) {
@@ -76,7 +76,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       scopeId: scope.id,
       scopeConfiguration: scope
     });
-  }
+  };
 
   function scopeObj(scopeName) {
 
